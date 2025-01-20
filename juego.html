@@ -107,7 +107,16 @@
             <button id="restart-button">Reiniciar Juego</button>
         </div>
     </div>
+
     <script>
+        // Función para mezclar las preguntas de manera aleatoria
+        function shuffleQuestions() {
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]]; // Intercambia las preguntas
+            }
+        }
+
         let score = 0;
         const questions = [
             { question: "Sé la molestia que esto le causa", options: ["Empatía", "Cierre", "Evitar"], correct: "Empatía" },
@@ -139,6 +148,7 @@
             document.getElementById('score').innerText = `Puntuación: ${score}`;
             document.getElementById('final-result').style.display = 'none';
             gameSection.style.display = 'block';
+            shuffleQuestions(); // Mezclar preguntas antes de iniciar el juego
             loadQuestion();
         });
 
@@ -200,7 +210,10 @@
         }
 
         // Iniciar el juego automáticamente al cargar la página
-        window.onload = loadQuestion;
+        window.onload = () => {
+            shuffleQuestions(); // Mezclar preguntas al cargar
+            loadQuestion();
+        };
     </script>
 </body>
 </html>
